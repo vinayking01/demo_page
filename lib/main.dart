@@ -36,15 +36,30 @@ class tracking extends StatelessWidget {
                 color: Colors.indigoAccent,
                 child: Text(
                   "For CHART",
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(fontSize: 20),
                 ),
                 elevation: 20, //this is used for the shadow of the card
               ),
             ),
             //A card in Flutter is in rounded corner shape and has a shadow. We mainly used it to store the content and action of a single object.
-           Column(
+            Column(
              children: my_transaction_list.map((tx){
-               return Card(child: Text(tx.title),);
+               return Card(child: Row(children: <Widget>[Container(child: Text(tx.amount.toString()), //need to convert because inside in text
+                   ),
+                   Column(
+                     children: <Widget>[
+                       Container(
+                         child: Text("\n ${tx.title.toString()}"), //need to convert because inside in text
+                       ),
+                       Container(
+                         child: Text("\n ${tx.date.toString()}"), //need to convert because inside in text
+                       )
+                     ],
+                   )
+
+
+                   ],
+               ),);
              }).toList()
            )
           ],
