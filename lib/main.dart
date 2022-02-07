@@ -21,8 +21,11 @@ class Tracking extends StatelessWidget {
         date: DateTime.now(),
         title: "New Grocceries"),
   ];
-  String titleInput;
-  String amountInput;
+  // String titleInput;
+  // String amountInput;
+  final titlecontroller = TextEditingController();  //creating controller by calling it  (it is alternate of onchanged)
+  final amountcontroller = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -57,21 +60,25 @@ class Tracking extends StatelessWidget {
                   children: <Widget>[
                     TextField(
                       decoration: InputDecoration(labelText: "Title"),
-                      onChanged: (String textInputByUserInTheFeild){    //Onchganged- this is property which refer to initiates the changes to the input fields
-                        // it needs a function which taking a input from user by default it is always string
-                            titleInput = textInputByUserInTheFeild; // storing the value entered in the inputfield
-                      },
+                      // onChanged: (String textInputByUserInTheFeild){    //Onchganged- this is property which refer to initiates the changes to the input fields
+                      //   // it needs a function which taking a input from user by default it is always string
+                      //       titleInput = textInputByUserInTheFeild; // storing the value entered in the inputfield
+                      // },
+                      controller: titlecontroller,  //this is controller which is used by flutter directly to connect to the input field and track the changes on input field
                     ),
                     TextField(
                       decoration: InputDecoration(labelText: "Amount"),
-                      onChanged: (textAmountInputByUserInTheFeild){  //
-                        amountInput = textAmountInputByUserInTheFeild;
-                      },
+                      // onChanged: (textAmountInputByUserInTheFeild){  //
+                      //   amountInput = textAmountInputByUserInTheFeild;
+                      // },
+                      controller: amountcontroller,
                     ),
                     FlatButton(
                       onPressed: (){
-                        print("User entered title :- "+titleInput);
-                        print("User entered amouint :- "+amountInput);
+                        // print("User entered title :- "+titleInput);
+                        // print("User entered amouint :- "+amountInput);
+                        print("User entered title :- "+titlecontroller.text);
+                        print("User entered amouint :- "+amountcontroller.text);
                       },
                       child: Text(
                         "Add Transaction",
