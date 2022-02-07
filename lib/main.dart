@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './transaction.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(Tracking());
@@ -19,6 +21,8 @@ class Tracking extends StatelessWidget {
         date: DateTime.now(),
         title: "New Grocceries"),
   ];
+  String titleInput;
+  String amountInput;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +36,7 @@ class Tracking extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 40,
-              margin: EdgeInsets.only(top: 100,bottom: 100),
+              // margin: EdgeInsets.only(bottom: 100),
               width: double.infinity, // as much as he can take
               child: Card(
                 // card by default depends upon the size of child unless they itself having a parent
@@ -46,6 +49,40 @@ class Tracking extends StatelessWidget {
               ),
             ),
             //A card in Flutter is in rounded corner shape and has a shadow. We mainly used it to store the content and action of a single object.
+            Card(
+              child: Container(
+                padding: EdgeInsets.only(left: 10, right: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    TextField(
+                      decoration: InputDecoration(labelText: "Title"),
+                      onChanged: (String textInputByUserInTheFeild){    //Onchganged- this is property which refer to initiates the changes to the input fields
+                        // it needs a function which taking a input from user by default it is always string
+                            titleInput = textInputByUserInTheFeild; // storing the value entered in the inputfield
+                      },
+                    ),
+                    TextField(
+                      decoration: InputDecoration(labelText: "Amount"),
+                      onChanged: (textAmountInputByUserInTheFeild){  //
+                        amountInput = textAmountInputByUserInTheFeild;
+                      },
+                    ),
+                    FlatButton(
+                      onPressed: (){
+                        print("User entered title :- "+titleInput);
+                        print("User entered amouint :- "+amountInput);
+                      },
+                      child: Text(
+                        "Add Transaction",
+                        style: TextStyle(color: Colors.purple),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             Column(
                 children: my_transaction_list.map((tx) {
               return Card(
@@ -53,24 +90,32 @@ class Tracking extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(border: Border.all(color: Colors.purple,width: 2)),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.purple, width: 2)),
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        "\$${tx.amount}", // beacuse when we use $ in dart it means it trying to manipulate the string but i want to act that as symbol so this is simple concept to use it
-                      style: TextStyle(fontWeight: FontWeight.bold,
-                      color: Colors.purple),), //need to convert because inside in text
+                        "\$${tx.amount}",
+                        // beacuse when we use $ in dart it means it trying to manipulate the string but i want to act that as symbol so this is simple concept to use it
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.purple),
+                      ), //need to convert because inside in text
                     ),
-              Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
                           child: Text(
-                              "${tx.title.toString()}",
-                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),), //need to convert because inside in text
+                            "${tx.title.toString()}",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 13),
+                          ), //need to convert because inside in text
                         ),
                         Container(
                           child: Text(
-                              "${tx.date.toString()}",style: TextStyle(fontSize: 11,color: Colors.grey),), //need to convert because inside in text
+                            DateFormat('dd/mm/yyyy').format(tx.date),
+                            // formatting our date
+                            style: TextStyle(fontSize: 11, color: Colors.grey),
+                          ), //need to convert because inside in text
                         )
                       ],
                     )
