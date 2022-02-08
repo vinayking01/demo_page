@@ -10,7 +10,10 @@ class ourtransactions_list extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Container(
+      height: 300,// make a container with some fixed height where list will be scrollable only on that part not in whole screen
+      child:SingleChildScrollView(
+        child:Column(
         children: transactions.map((tx) {
           return Card(
             child: Row(
@@ -49,6 +52,8 @@ class ourtransactions_list extends StatelessWidget {
               ],
             ),
           );
-        }).toList());
+        }).toList()
+    ))
+    );
   }
 }
