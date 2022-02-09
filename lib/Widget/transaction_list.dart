@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:intl/intl.dart';
 import 'package:project117/model/transaction.dart';
 
@@ -13,6 +12,7 @@ class ourtransactions_list extends StatelessWidget {
     return Container(
       height: 300,// make a container with some fixed height where list will be scrollable only on that part not in whole screen
         child:ListView.builder(
+
           itemCount: transactions.length,//depends upon the length of the string
           itemBuilder: (BuildContext context,index){
             return Card(
@@ -24,7 +24,7 @@ class ourtransactions_list extends StatelessWidget {
                         border: Border.all(color: Colors.purple, width: 2)),
                     padding: EdgeInsets.all(10),
                     child: Text(
-                      "\$${transactions[index].amount}",
+                      "\$${transactions[index].amount.toStringAsFixed(2)}",
                       // beacuse when we use $ in dart it means it trying to manipulate the string but i want to act that as symbol so this is simple concept to use it
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.purple),

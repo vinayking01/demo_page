@@ -2,14 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project117/Widget/user_transaction.dart';
 
-
-
 void main() {
   runApp(Tracking());
 }
 
 class Tracking extends StatelessWidget {
-
   // String titleInput;
   // String amountInput;
 
@@ -20,8 +17,20 @@ class Tracking extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(
           title: Text("Flutter App"),
+          actions: <Widget>[
+            //actions - a row of list of widget to showcase the icon button
+            // Text("data"),
+            IconButton(
+              onPressed: () => {},
+              icon: Icon(Icons.add),
+            ),
+            IconButton(
+                onPressed: () => {}, icon: Icon(Icons.add_a_photo_outlined))
+          ],
         ),
-        body: SingleChildScrollView( // added to add the scrolling function and overcoming the problem of overflowed pixels
+        body: SingleChildScrollView(
+          // added to add the scrolling
+          // function and overcoming the problem of overflowed pixels
           // single child scrollview can be added in while page or at any small peice of page eg ;- in some container of list .
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -40,12 +49,12 @@ class Tracking extends StatelessWidget {
                 ),
               ),
               //A card in Flutter is in rounded corner shape and has a shadow. We mainly used it to store the content and action of a single object.
-            UserTransaction(),
+              UserTransaction(),
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton(child: Icon(Icons.add),backgroundColor: Colors.red,),
       ),
     );
   }
 }
-

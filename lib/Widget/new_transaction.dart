@@ -5,6 +5,17 @@ class NewTransaction extends StatelessWidget {
   final Function addtx;
   NewTransaction(this.addtx);
 
+  void submitData()
+  {
+    final enteredtitle = titlecontroller.text;
+    final enteredamount =  amountcontroller.text;
+
+    if(enteredtitle.isEmpty || enteredamount.isEmpty || double.parse(enteredamount )< 0)  //some validation is added
+      {
+        return;
+      }
+    addtx(enteredtitle,double.parse(enteredamount)); //(double.parse) is used to convert it from string to double
+  }
   final titlecontroller = TextEditingController();  //creating controller by calling it  (it is alternate of onchanged)
   final amountcontroller = TextEditingController();
   @override
@@ -21,6 +32,7 @@ class NewTransaction extends StatelessWidget {
               //   // it needs a function which taking a input from user by default it is always string
               //       titleInput = textInputByUserInTheFeild; // storing the value entered in the inputfield
               // },
+              // onSubmitted: (_)=> submitData(),
               controller: titlecontroller,  //this is controller which is used by flutter directly to connect to the input field and track the changes on input field
             ),
             TextField(
@@ -28,16 +40,12 @@ class NewTransaction extends StatelessWidget {
               // onChanged: (textAmountInputByUserInTheFeild){  //
               //   amountInput = textAmountInputByUserInTheFeild;
               // },
+              keyboardType:TextInputType.number,
+              // onSubmitted: (_)=> submitData(),//in this textfield it will only show the keyboard related to the numbers
               controller: amountcontroller,
             ),
             FlatButton(
-              onPressed: (){
-                // print("User entered title :- "+titleInput);
-                // print("User entered amouint :- "+amountInput);
-                // print("User entered title :- "+titlecontroller.text);
-                // print("User entered amouint :- "+amountcontroller.text);
-                addtx(titlecontroller.text,double.parse(amountcontroller.text)); //(double.parse) is used to convert it from string to double
-              },
+              onPressed:submitData,
               child: Text(
                 "Add Transaction",
                 style: TextStyle(color: Colors.purple),

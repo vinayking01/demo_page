@@ -3,7 +3,8 @@ import 'package:flutter/foundation.dart';
 
 class Transaction {
   @required
-  final String id; //required can be used by importing any material.dart , foundation.dart
+  final String id;
+  //required can be used by importing any material.dart , foundation.dart
   @required
   final String title;
   @required
