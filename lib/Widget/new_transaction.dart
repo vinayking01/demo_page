@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
+class NewTransaction extends StatefulWidget {
 
   final Function addtx;
   NewTransaction(this.addtx);
 
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
   void submitData()
   {
     final enteredtitle = titlecontroller.text;
@@ -14,10 +19,12 @@ class NewTransaction extends StatelessWidget {
       {
         return;
       }
-    addtx(enteredtitle,double.parse(enteredamount)); //(double.parse) is used to convert it from string to double
+    widget.addtx(enteredtitle,double.parse(enteredamount)); //(double.parse) is used to convert it from string to double
   }
-  final titlecontroller = TextEditingController();  //creating controller by calling it  (it is alternate of onchanged)
+
+  final titlecontroller = TextEditingController();
   final amountcontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -32,8 +39,10 @@ class NewTransaction extends StatelessWidget {
               //   // it needs a function which taking a input from user by default it is always string
               //       titleInput = textInputByUserInTheFeild; // storing the value entered in the inputfield
               // },
-              // onSubmitted: (_)=> submitData(),
-              controller: titlecontroller,  //this is controller which is used by flutter directly to connect to the input field and track the changes on input field
+              onSubmitted: (_)=> submitData(),
+              controller: titlecontroller,
+
+              //this is controller which is used by flutter directly to connect to the input field and track the changes on input field
             ),
             TextField(
               decoration: InputDecoration(labelText: "Amount"),
@@ -41,7 +50,7 @@ class NewTransaction extends StatelessWidget {
               //   amountInput = textAmountInputByUserInTheFeild;
               // },
               keyboardType:TextInputType.number,
-              // onSubmitted: (_)=> submitData(),//in this textfield it will only show the keyboard related to the numbers
+              onSubmitted: (_)=> submitData(),//in this textfield it will only show the keyboard related to the numbers
               controller: amountcontroller,
             ),
             FlatButton(
