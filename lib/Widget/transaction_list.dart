@@ -52,8 +52,10 @@ class ourtransactions_list extends StatelessWidget {
                 ],
               ),
             );
+
           },
-    ))
+    )
+    )
     ;
   }
 }

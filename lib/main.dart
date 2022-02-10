@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project117/Widget/transaction_list.dart';
@@ -19,7 +21,6 @@ class Myapp extends StatelessWidget {
 }
 
 class Tracking extends StatefulWidget {
-
   @override
   TrackingState createState() => TrackingState();
 }
@@ -54,7 +55,12 @@ class TrackingState extends State<Tracking> {
     showModalBottomSheet(
         context: context,
         builder: (MyContext) {
-          return NewTransaction(addNewTransaction);
+          return GestureDetector(
+            onTap: () => {},
+            // height: 200,
+            child: NewTransaction(addNewTransaction),
+            behavior: HitTestBehavior.opaque,
+          );
         });
   }
 
@@ -113,14 +119,7 @@ class TrackingState extends State<Tracking> {
         child: Icon(Icons.add),
         backgroundColor: Colors.red,
         onPressed: () => {
-          showModalBottomSheet(
-              context: context,
-              builder: (MyContext) {
-                return Container(
-                  // height: 200,
-                  child: NewTransaction(addNewTransaction),
-                );
-              })
+          MyBottomSheet(context),
         },
       ),
     );

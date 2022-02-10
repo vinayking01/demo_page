@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NewTransaction extends StatefulWidget {
-
   final Function addtx;
+
   NewTransaction(this.addtx);
 
   @override
@@ -10,16 +10,22 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  void submitData()
-  {
+  void submitData() {
     final enteredtitle = titlecontroller.text;
-    final enteredamount =  amountcontroller.text;
+    final enteredamount = amountcontroller.text;
 
-    if(enteredtitle.isEmpty || enteredamount.isEmpty || double.parse(enteredamount )< 0)  //some validation is added
-      {
-        return;
-      }
-    widget.addtx(enteredtitle,double.parse(enteredamount)); //(double.parse) is used to convert it from string to double
+    if (enteredtitle.isEmpty ||
+        enteredamount.isEmpty ||
+        double.parse(enteredamount) < 0) //some validation is added
+    {
+      return;
+    }
+    widget.addtx(
+        //this is automatically converted into this to create connection our directly properties
+        enteredtitle,
+        double.parse(enteredamount));
+    //(double.parse) is used to convert it from string to double
+    Navigator.of(context).pop(); //to off the scren automatically on adding and  this will be called from  the inputfield not from add transaction button
   }
 
   final titlecontroller = TextEditingController();
@@ -39,7 +45,7 @@ class _NewTransactionState extends State<NewTransaction> {
               //   // it needs a function which taking a input from user by default it is always string
               //       titleInput = textInputByUserInTheFeild; // storing the value entered in the inputfield
               // },
-              onSubmitted: (_)=> submitData(),
+              onSubmitted: (_) => submitData(),
               controller: titlecontroller,
 
               //this is controller which is used by flutter directly to connect to the input field and track the changes on input field
@@ -49,12 +55,13 @@ class _NewTransactionState extends State<NewTransaction> {
               // onChanged: (textAmountInputByUserInTheFeild){  //
               //   amountInput = textAmountInputByUserInTheFeild;
               // },
-              keyboardType:TextInputType.number,
-              onSubmitted: (_)=> submitData(),//in this textfield it will only show the keyboard related to the numbers
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitData(),
+              //in this textfield it will only show the keyboard related to the numbers
               controller: amountcontroller,
             ),
             FlatButton(
-              onPressed:submitData,
+              onPressed: submitData,
               child: Text(
                 "Add Transaction",
                 style: TextStyle(color: Colors.purple),
@@ -63,7 +70,7 @@ class _NewTransactionState extends State<NewTransaction> {
           ],
         ),
       ),
-    );;
+    );
+    ;
   }
 }
-
