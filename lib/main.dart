@@ -1,7 +1,6 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project117/Widget/chart.dart';
 import 'package:project117/Widget/transaction_list.dart';
 import 'model/transaction.dart';
 import 'package:project117/Widget/new_transaction.dart';
@@ -15,6 +14,15 @@ class Myapp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Flutter App",
+      theme: ThemeData(
+          // no need to manually add the theme color below anywhere
+          // primaryColor: Colors.green,
+          primarySwatch: Colors.red,
+          accentColor: Colors.amberAccent,
+          fontFamily: 'OpenSans',
+          appBarTheme: AppBarTheme( // by using this we have not to change in every page of same app in the appvar
+              textTheme: ThemeData.light().textTheme.copyWith(  // copying the theme to every page connected
+                  title: TextStyle(fontFamily: 'OpenSans', fontSize: 15)))),
       home: Tracking(),
     );
   }
@@ -27,19 +35,23 @@ class Tracking extends StatefulWidget {
 
 class TrackingState extends State<Tracking> {
   final List<Transaction> my_transaction_list = [
-    Transaction(
-        id: 't1', amount: 69.099, date: DateTime.now(), title: "New shoes"),
-    Transaction(
-        id: 't2', amount: 63.099, date: DateTime.now(), title: "New bag"),
-    Transaction(
-        id: 't3', amount: 16.099, date: DateTime.now(), title: "New phone"),
-    Transaction(
-        id: 't4',
-        amount: 89.099,
-        date: DateTime.now(),
-        title: "New Grocceries"),
+  //   Transaction(
+  //       id: 't1', amount: 69.099, date: DateTime.now(), title: "New shoes"),
+  //   Transaction(
+  //       id: 't2', amount: 63.099, date: DateTime.now(), title: "New bag"),
+  //   Transaction(
+  //       id: 't3', amount: 16.099, date: DateTime.now(), title: "New phone"),
+  //   Transaction(
+  //       id: 't4',
+  //       amount: 89.099,
+  //       date: DateTime.now(),
+  //       title: "New Grocceries"),
   ];
-
+List<Transaction> get recenttransaction{
+  return my_transaction_list.where((tx){
+    return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+  }).toList();
+}
   void addNewTransaction(String txtitle, double txamount) {
     final newTx = Transaction(
         title: txtitle,
@@ -69,7 +81,8 @@ class TrackingState extends State<Tracking> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter App"),
+        // backgroundColor: Colors.red,
+        title: Text("Personal Expenses"),
         actions: <Widget>[
           //actions - a row of list of widget to showcase the icon button
           // Text("data"),
@@ -97,27 +110,17 @@ class TrackingState extends State<Tracking> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Container(
-              // margin: EdgeInsets.only(bottom: 100),
-              width: double.infinity, // as much as he can take
-              child: Card(
-                // card by default depends upon the size of child unless they itself having a parent
-                color: Colors.indigoAccent,
-                child: Text(
-                  "For CHART",
-                  style: TextStyle(fontSize: 20),
-                ),
-                elevation: 20, //this is used for the shadow of the card
-              ),
-            ),
+            chart(recenttransaction),
             //A card in Flutter is in rounded corner shape and has a shadow. We mainly used it to store the content and action of a single object.
             ourtransactions_list(my_transaction_list),
           ],
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // this is added just to center at the bottom no need to do it manually
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        backgroundColor: Colors.red,
+        // backgroundColor: Colors.red, // take color from theme
         onPressed: () => {
           MyBottomSheet(context),
         },
