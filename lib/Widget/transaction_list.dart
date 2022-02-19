@@ -1,13 +1,14 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:project117/model/transaction.dart';
 
 class ourtransactions_list extends StatelessWidget {
   final List<Transaction> transactions;
-
-  ourtransactions_list(this.transactions);
+  final Function deletetx;
+  ourtransactions_list(this.transactions,this.deletetx);
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +41,9 @@ class ourtransactions_list extends StatelessWidget {
                       ),
                       title: Text(transactions[index].title,style: Theme.of(context).textTheme.title,),
                       subtitle: Text(DateFormat.yMMMd().format(transactions[index].date)), // always comes below the title even you write in any order
+                      trailing: IconButton(icon: Icon(Icons.delete),color: Colors.yellow, onPressed: ()=>deletetx(transactions[index].id),),
                     ),
-                    
+
                   );
                 },
               ));
