@@ -52,11 +52,11 @@ List<Transaction> get recenttransaction{
     return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
   }).toList();
 }
-  void addNewTransaction(String txtitle, double txamount) {
+  void addNewTransaction(String txtitle, double txamount,DateTime selectdate) {
     final newTx = Transaction(
         title: txtitle,
         amount: txamount,
-        date: DateTime.now(),
+        date: selectdate,
         id: DateTime.now().toString());
     setState(() {
       my_transaction_list.add(newTx);

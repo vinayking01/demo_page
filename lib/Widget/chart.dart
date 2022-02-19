@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project117/Widget/chartBar.dart';
 import 'package:project117/model/transaction.dart';
 import 'package:intl/intl.dart';
 
@@ -8,7 +9,7 @@ class chart extends StatelessWidget {
 
   chart(this.recentTransaction);
 
-  List<Map<String,Object>>get GroupedTrasactionValues{
+  List<Map<String,Object>>get GroupedTransactionValues{
     return List.generate(7, (index){
       final weekDay = DateTime.now().subtract(Duration(days: index),); // subtracting days from previuos day
       var totalsum=0.0;
@@ -29,17 +30,30 @@ class chart extends StatelessWidget {
 
     });
   }
+  double get totalSpending {
+    return GroupedTransactionValues.fold(0.0, (sum, item) {
+      return sum + item['amount'];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    print(GroupedTrasactionValues);
-    return Card(
-      elevation: 6,
-      margin: EdgeInsets.all(10),
-      child: Row(
-        children: GroupedTrasactionValues.map((mydata){
-          return Text('${mydata['day']} : ${mydata['amount']}'); // chart value with amount is showing
-        }).toList(),
+    print(GroupedTransactionValues);
+    return Container(
+      child: Card(
+        elevation: 6,
+        margin: EdgeInsets.all(10),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: GroupedTransactionValues.map((mydata){
+              return Flexible(  // to handle the child flex element and alterante we can  use the Expanded property also
+                  fit: FlexFit.tight,
+                  child: ChartBar(mydata['day'],mydata['amount'],totalSpending == 0.0 ? 0.0 : (mydata['amount'] as double) / totalSpending,)); // chart value with amount is showing
+            }).toList(),
+          ),
+        ),
       ),
     );
 
